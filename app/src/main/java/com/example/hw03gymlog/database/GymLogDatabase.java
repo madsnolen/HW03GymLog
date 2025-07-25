@@ -1,4 +1,4 @@
-package com.example.hw03gymlog.Database;
+package com.example.hw03gymlog.database;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,16 +6,19 @@ import android.util.Log;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.hw03gymlog.Database.entities.GymLog;
+import com.example.hw03gymlog.database.entities.GymLog;
 import com.example.hw03gymlog.MainActivity;
+import com.example.hw03gymlog.database.typeConverters.LocalDateTypeConverter;
 
 import org.jspecify.annotations.NonNull;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+@TypeConverters(LocalDateTypeConverter.class)
 @Database(entities = {GymLog.class}, version = 1, exportSchema = false)
 public abstract class GymLogDatabase extends RoomDatabase {
 
@@ -50,6 +53,7 @@ public abstract class GymLogDatabase extends RoomDatabase {
             super.onCreate(db);
             Log.i(MainActivity.TAG, "DATABASE CREATED!");
             //TODO: add databaseWriteExecutor.execute(() ->{...}
+
         }
     };
 

@@ -9,13 +9,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.hw03gymlog.database.GymLogRepository;
+import com.example.hw03gymlog.database.entities.GymLog;
 import com.example.hw03gymlog.databinding.ActivityMainBinding;
 
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
+
+    private GymLogRepository repository;
 
     public static final String TAG = "DAC_GYMLOG";
 
@@ -29,12 +33,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        repository = GymLogRepository.getRepository(getApplication());
+
         binding.logDisplayTextView.setMovementMethod(new ScrollingMovementMethod());
 
         binding.logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getInformationFromDisplay();
+                insertGymLogRecord();
                 updateDisplay();
             }
         });
@@ -42,26 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void insertGymLogRecord() {
+        GymLog log = new GymLog(mExercise, mWeight, mReps);
+        repository.insertGymLog(log);
+    }
     private void updateDisplay(){
         String currentInfo = binding.logDisplayTextView.getText().toString();
         Log.d(TAG, "Current info: " + currentInfo);
         String newDisplay = String.format(Locale.US,"Exercise:%s%nWeight:%.2f%nReps:%d%n=-=-=-=%n%s", mExercise, mWeight,mReps, currentInfo);
         binding.logDisplayTextView.setText(newDisplay);
+        Log.i(TAG, repository.getAllLogs().toString());
     }
 
     private void getInformationFromDisplay(){
         mExercise = binding.exerciseInputEditText.getText().toString();
         try {
-
-
             mWeight = Double.parseDouble(binding.weightInputEditText.getText().toString());
         }catch (NumberFormatException e) {
             Log.d(TAG, "Error reading value from Weight edit text.");
         }
 
         try {
-
-
             mReps = Integer.parseInt(binding.repInputEditText.getText().toString());
         }catch (NumberFormatException e) {
             Log.d(TAG, "Error reading value from reps edit text.");
