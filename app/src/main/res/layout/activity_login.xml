@@ -11,14 +11,13 @@
         android:id="@+id/titleLoginTextView"
         android:layout_width="match_parent"
         android:layout_height="150dip"
-        android:layout_margin="16dip"
-        android:layout_marginBottom="24dip"
+        android:layout_marginTop="100dp"
         android:gravity="center"
         android:text="@string/login_welcome"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
         android:id="@+id/userNameLoginEditText"
@@ -39,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="44dp"
         android:autofillHints="Please enter password"
         android:gravity="center"
         android:hint="@string/password"
@@ -53,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="105dp"
         android:layout_margin="16dp"
+        android:layout_marginTop="40dp"
         android:text="@string/login"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
